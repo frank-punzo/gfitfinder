@@ -1,0 +1,5 @@
+{
+  "name": "gFitFinder",
+  "description": "AI-powered fashion assistant that identifies clothing from images and finds where to buy them using Gemini Vision and Google Search.",
+  "requestFramePermissions": []
+}
