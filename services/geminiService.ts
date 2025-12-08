@@ -1,8 +1,38 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AnalysisResult, ClothingItem, Product } from "../types";
 
-// Initialize the client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Helper function to safely retrieve the API key from various environments
+const getApiKey = (): string => {
+  // 1. Check process.env.API_KEY (Standard Node/AI Studio environment)
+  if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+    return process.env.API_KEY;
+  }
+  
+  // 2. Check Vite environment (import.meta.env.VITE_API_KEY) - Common for Vercel/React
+  // @ts-ignore
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_KEY) {
+    // @ts-ignore
+    return import.meta.env.VITE_API_KEY;
+  }
+
+  // 3. Check Create React App environment (process.env.REACT_APP_API_KEY)
+  if (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_KEY) {
+    return process.env.REACT_APP_API_KEY;
+  }
+
+  // 4. Check Next.js public environment
+  if (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_KEY) {
+    return process.env.NEXT_PUBLIC_API_KEY;
+  }
+
+  return "";
+};
+
+const apiKey = getApiKey();
+
+// Initialize the client with the retrieved key
+// If key is missing, we pass a placeholder to avoid immediate crash, but calls will fail
+const ai = new GoogleGenAI({ apiKey: apiKey || "MISSING_KEY" });
 
 // Constants for models
 const VISION_MODEL = "gemini-2.5-flash";
@@ -15,6 +45,10 @@ export const analyzeImageWithGemini = async (
   base64Image: string,
   mimeType: string
 ): Promise<AnalysisResult> => {
+  if (!apiKey || apiKey === "MISSING_KEY") {
+    throw new Error("API Key not found. Please check your environment variables (e.g., VITE_API_KEY).");
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: VISION_MODEL,
@@ -82,6 +116,11 @@ Return the response in JSON format.`,
 export const searchProductsWithGemini = async (
   item: ClothingItem
 ): Promise<Product[]> => {
+  if (!apiKey || apiKey === "MISSING_KEY") {
+    console.error("API Key missing during search.");
+    return [];
+  }
+
   const searchQuery = `${item.searchTerms} buy online`;
   
   try {

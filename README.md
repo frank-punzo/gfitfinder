@@ -72,14 +72,26 @@ graph TD
 3.  **Set up your API Key**:
     *   If running locally with a build tool like Vite/Parcel, create a `.env` file:
         ```
-        API_KEY=your_gemini_api_key_here
+        # Use VITE_ prefix for Vite apps
+        VITE_API_KEY=your_gemini_api_key_here
         ```
-    *   *Note: In the provided environment, the API key is injected automatically via `process.env.API_KEY`.*
 
 4.  **Run the application**:
     ```bash
     npm start
     ```
+
+## ☁️ Deployment on Vercel
+
+If you are deploying to Vercel (or Netlify), you must configure your Environment Variables specifically for the frontend build tool you are using.
+
+1.  Go to your Vercel Project Settings > Environment Variables.
+2.  Add a new variable:
+    *   **Key**: `VITE_API_KEY` (if using Vite) or `REACT_APP_API_KEY` (if using Create React App).
+    *   **Value**: Your Google Gemini API Key.
+3.  **Redeploy** your application for the changes to take effect.
+
+> **Note**: Standard `API_KEY` works in local Node.js environments, but browser-based React apps usually require the `VITE_` or `REACT_APP_` prefix to expose the variable to the client code securely.
 
 ## 🛠 Tech Stack
 
