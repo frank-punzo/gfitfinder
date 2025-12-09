@@ -1,24 +1,29 @@
-html, body, #root {
-  height: 100%; /* Ensures the html, body, and root div take up the full viewport height */
+html, body {
+  /* Ensures html and body take minimum 100% height of the page */
+  height: 100%; 
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  background-color: #0a0a0a;
-  margin: 0;
-  /* Removed centering properties to allow content to flow naturally */
-  min-height: 100vh; /* Kept for fallback, but 100% is more reliable on mobile */
+#root {
+  /* Use 100vh here to ensure the root container uses the full screen height */
+  /* Fallback for older browsers */
+  min-height: 100vh;
+  /* Use dynamic viewport height for better mobile compatibility */
+  min-height: 100dvh; 
+  width: 100%;
+  background-color: #0a0a0a; /* Retained background color on the root div */
   font-family: 'Instrument Sans', sans-serif;
   color: white;
-  overflow: auto; /* Allows scrolling if content exceeds screen size */
+  overflow: auto; /* Allows content to scroll within the full screen area */
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* Rest of the CSS remains the same */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
