@@ -116,7 +116,7 @@ const ClothingFinder: React.FC = () => {
       setLoading(false);
       setLoadingStep('');
     }
-  };
+  }; 
 
   const reset = () => {
     setImage(null);
