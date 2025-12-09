@@ -4,15 +4,59 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>StyleSeek</title>
-    <!-- Add this inline style block as an emergency measure -->
-    <style>
-      /* Ensure everything starts clean and covers the display */
-      html, body, #root {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* Prevent scrolling if not needed */
+    <!-- Fix 404 Favicon by using a Data URI -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22www.w3.org viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👗</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts are linked here, so the @import in CSS is a backup -->
+    <link href="fonts.googleapis.com" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Instrument Sans"', 'sans-serif'],
+              serif: ['"Playfair Display"', 'serif'],
+            },
+            colors: {
+              gold: {
+                400: '#E8D5B7',
+                500: '#C4A77D',
+              }
+            },
+            animation: {
+              'spin-slow': 'spin 3s linear infinite',
+              'fade-in': 'fadeIn 0.6s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              }
+            }
+          },
+        },
       }
-    </style>
-    <!-- ... rest of head ... -->
+    </script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "aistudiocdn.com@^19.2.1/",
+        "react": "aistudiocdn.com@^19.2.1",
+        "react-dom/": "aistudiocdn.com-dom@^19.2.1/",
+        "@google/genai": "aistudiocdn.com@^1.31.0"
+      }
+    }
+    </script>
+</head>
+  <!-- Remove the inline style attribute -->
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
